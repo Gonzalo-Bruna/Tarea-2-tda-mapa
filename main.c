@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "map.h"
+#include "functions.h"
 
 int main(){
 
