@@ -7,7 +7,6 @@ int main(){
 
     while(1){
 
-
         printf("¡Bienvenido a nuestro sistema de organizacion de productos!");
         printf("\n");
         printf("Por favor, elija una de las siguientes opciones: ");
@@ -31,12 +30,11 @@ int main(){
         printf("\n");
         printf("opcion 9: Concretar compra");
         printf("\n");
+        printf("opcion 0: Cerrar programa");
+        printf("\n");
         printf("\n");
 
-
-        size_t opcion;
-
-        break;
+        int opcion;
 
     }
 
