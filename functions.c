@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "functions.h"
 #include "list.h"
+#include "map.h"
 
 struct producto{
 

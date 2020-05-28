@@ -8,9 +8,9 @@ typedef struct producto producto;
 typedef struct carrito carrito;
 
 //funcion que duplica un string
-char * _strdup (const char *s);
+char * _strdup (const char *);
 
 //funcion que obtiene un campo de un archivo csv
-const char *get_csv_field (char * tmp, int i);
+const char *get_csv_field (char *, int);
 
 #endif
