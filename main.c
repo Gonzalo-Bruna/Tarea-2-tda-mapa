@@ -5,9 +5,13 @@
 
 int main(){
 
-    while(1){
+    printf("¡Bienvenido a nuestro sistema de organizacion de productos!");
 
-        printf("¡Bienvenido a nuestro sistema de organizacion de productos!");
+    int opcion;
+    HashTable * productos = createHashTable(100);
+
+    do{
+
         printf("\n");
         printf("Por favor, elija una de las siguientes opciones: ");
         printf("\n");
@@ -34,8 +38,6 @@ int main(){
         printf("\n");
         printf("\n");
 
-        int opcion;
-
         do{
 
             printf("por favor escoja una opcion: ");
@@ -47,7 +49,7 @@ int main(){
 
         switch(opcion){
 
-            case 1:
+            case 1: if (importarProductosCSV(productos) == -1) opcion = -1;
                 break;
             case 2:
                 break;
@@ -69,9 +71,7 @@ int main(){
                 break;
         }
 
-    break;
-
-    }
+    }while(opcion == -1);
 
     system("pause");
 
