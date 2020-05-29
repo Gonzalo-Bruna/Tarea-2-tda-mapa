@@ -18,7 +18,7 @@ int main(){
         printf("\n");
         printf("opcion 1: Importar productos desde un archivo");
         printf("\n");
-        printf("opcion 2: Exportar productosa a un archivo csv");
+        printf("opcion 2: Exportar productos a un archivo csv");
         printf("\n");
         printf("opcion 3: Agregar un producto");
         printf("\n");
