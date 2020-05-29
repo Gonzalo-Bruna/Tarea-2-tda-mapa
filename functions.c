@@ -148,3 +148,86 @@ int exportarProductosCSV(HashTable * productos){
 
     return -1;
 }
+
+int agregarProducto(HashTable * productos){
+
+    printf("Para agregar productos, se debe agregar la siguiente informacion, \n");
+
+    char nombre[100];
+    char marca[50];
+    char tipo[50];
+    int precio;
+
+    fflush(stdin);
+
+    printf("Ingrese el nombre del producto: ");
+    scanf("%[^\n]s", nombre);
+    fflush(stdin);
+
+    producto * nuevoProducto; //se crea un puntero del producto que se agregará
+
+    producto * producto = searchHashTable(productos, nombre);
+    if(!producto){
+
+        printf("Ingrese la marca del producto: ");
+        scanf("%[^\n]s", marca);
+        fflush(stdin);
+        printf("Ingrese el tipo de producto: ");
+        scanf("%[^\n]s", tipo);
+        fflush(stdin);
+        printf("Ingrese su precio: ");
+        scanf("%d", &precio);
+
+        int stock;
+        printf("El producto es nuevo, por favor ingrese el stock que desea agregar: ");
+        do{
+            scanf("%d", &stock);
+            if(stock <= 0) printf("El stock a agregar debe ser mayor que 0\n");
+        }while(stock < 0);
+
+        nuevoProducto = crearProducto(nombre, marca, tipo, stock, precio);
+        insertHashTable(productos, nombre, nuevoProducto);
+        printf("\n");
+        printf("El producto ha sido agregado de manera exitosa, con stock %d, ", nuevoProducto->stock);
+        system("pause");
+
+    }
+    else{
+
+        printf("\n");
+        printf("El producto que desea agregar ya existe, por favor indique si desea aumentar el stock: ");
+        int opcion;
+        do{
+            printf("\n\n");
+            printf("opcion 1: Agregar Stock\n");
+            printf("opcion 2: Volver al menu\n");
+            printf("\nEscoja una opcion: ");
+            scanf("%d", &opcion);
+
+            if(opcion > 2 || opcion < 1) printf("\nPor favor escriba una opcion correcta: ");
+
+        }while(opcion < 1 || opcion > 2);
+
+        if(opcion == 2) return -1;
+        else{
+
+            int stock;
+            do{
+
+                printf("\nPor favor ingrese el stock que desea agregar, el stock actual es: %d\n", producto->stock);
+                printf("Stock a agregar: ");
+                scanf("%d", &stock);
+
+                if(stock <= 0) printf("\nel stock a agregar debe ser mayor a 0\n");
+
+            }while(stock <= 0);
+            producto->stock = producto->stock + stock;
+            printf("\nEl nuevo stock del produto es: %d, ", producto->stock);
+            system("pause");
+
+        }
+
+    }
+
+    return -1;
+}

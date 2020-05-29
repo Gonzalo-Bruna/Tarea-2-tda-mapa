@@ -25,5 +25,8 @@ int importarProductosCSV(HashTable *);
 //exporta los productos ingresados anteriormente a un archivo .csv
 int exportarProductosCSV(HashTable *);
 
+//agrega un producto de manera manual
+int agregarProducto(HashTable *);
+
 
 #endif

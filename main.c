@@ -53,7 +53,7 @@ int main(){
                 break;
             case 2: opcion = exportarProductosCSV(productos);
                 break;
-            case 3:
+            case 3: opcion = agregarProducto(productos);
                 break;
             case 4:
                 break;
@@ -69,6 +69,7 @@ int main(){
                 break;
             default:
                 break;
+
         }
 
     }while(opcion == -1);
