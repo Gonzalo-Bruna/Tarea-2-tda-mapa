@@ -253,3 +253,46 @@ int buscarPorTipo(HashTable * productos){
     system("pause");
     return -1;
 }
+
+int buscarPorMarca(HashTable * productos){
+
+    producto * product = firstHashTable(productos);
+    if(!product){
+
+        printf("No existe ningun producto almacenado aun, ");
+        system("pause");
+        return -1;
+
+    }
+
+    printf("Ingrese el tipo que desea buscar: ");
+    char marca[50];
+    scanf("%s", marca);
+    fflush(stdin);
+
+    int cont = 0;
+
+    while(product != NULL){
+
+        if(strcmp(product->marca, marca) == 0){
+
+            if(cont == 0) printf("\nEstos productos se han encontrado de la marca %s: \n\n", marca);
+
+            printf("Nombre del producto: %s\n", product->nombre);
+            printf("Tipo del producto: %s\n", product->tipo);
+            printf("Stock del producto: %d\n", product->stock);
+            printf("Precio del producto: %d\n\n", product->precio);
+            cont++;
+        }
+        product = nextHashTable(productos);
+    }
+
+    if(cont == 0){
+        printf("\nNo se ha encontrado ningun producto de esta marca, ");
+    }
+
+    system("pause");
+    return -1;
+}
+
+

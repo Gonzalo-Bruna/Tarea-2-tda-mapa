@@ -57,7 +57,7 @@ int main(){
                 break;
             case 4: opcion = buscarPorTipo(productos);
                 break;
-            case 5:
+            case 5: opcion = buscarPorMarca(productos);
                 break;
             case 6:
                 break;

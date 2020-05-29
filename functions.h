@@ -50,5 +50,6 @@ int agregarProducto(HashTable *);
 //busca todos los productos del tipo ingresado
 int buscarPorTipo(HashTable *);
 
-
+//busca todos los productos de la marca ingresada
+int buscarPorMarca(HashTable *);
 #endif
