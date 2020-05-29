@@ -157,8 +157,10 @@ void * firstHashTable(HashTable * table) {
     while(table->buckets[i] == NULL || table->buckets[i]->value == NULL){
 
         i++;
+        if ( i == table->size) return NULL;
 
     }
+
 
     table->current = i;
     return table->buckets[i]->value;
