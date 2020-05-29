@@ -1,14 +1,33 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "list.h"
+#include "map.h"
+
 //struct producto
-typedef struct producto producto;
+typedef struct producto{
+
+    char * nombre;
+    char * marca;
+    char * tipo;
+    int stock;
+    int precio;
+
+} producto;
 
 //función creadora de producto
 producto * crearProducto(char *, char *, char *, int, int);
 
 //struct carrito
-typedef struct carrito carrito;
+typedef struct carrito{
+
+    List * productos;
+
+} carrito;
 
 //funcion que duplica un string
 char * _strdup (const char *);
@@ -27,6 +46,9 @@ int exportarProductosCSV(HashTable *);
 
 //agrega un producto de manera manual
 int agregarProducto(HashTable *);
+
+//busca todos los productos del tipo ingresado
+int buscarPorTipo(HashTable *);
 
 
 #endif

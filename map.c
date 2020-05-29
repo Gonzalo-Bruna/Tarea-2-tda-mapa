@@ -1,22 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
-
 #include "map.h"
-
-struct Pair {
-   const char * key; // Cadena
-   void * value; // Puntero al valor
-};
-
-struct HashTable {
-    Pair ** buckets; // Arreglo de punteros a Pair
-    long count; // Cantidad de datos no nulos
-    long size; // Tamaño del arreglo
-    long current; // Variable para poder recorrer el arreglo
-    long loadFactor; // Factor de carga del arreglo
-};
 
 HashTable * createHashTable(long size) {
     HashTable * ht = (HashTable *) malloc(sizeof(HashTable));

@@ -1,9 +1,27 @@
 #ifndef MAP_H
 #define MAP_H
 
-typedef struct Pair Pair;
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
 
-typedef struct HashTable HashTable;
+typedef struct Pair{
+
+    const char * key; // Cadena
+    void * value; // Puntero al valor
+
+} Pair;
+
+typedef struct HashTable{
+
+    Pair ** buckets; // Arreglo de punteros a Pair
+    long count; // Cantidad de datos no nulos
+    long size; // Tamaño del arreglo
+    long current; // Variable para poder recorrer el arreglo
+    long loadFactor; // Factor de carga del arreglo
+
+} HashTable;
 
 /* Crea una tabla de hash, inicializando buckets con NULL, count en 0, size en el valor pasado por parametro
 current - 1, y load factor en el procentaje de ocupacion con respecto a size */

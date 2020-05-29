@@ -55,7 +55,7 @@ int main(){
                 break;
             case 3: opcion = agregarProducto(productos);
                 break;
-            case 4:
+            case 4: opcion = buscarPorTipo(productos);
                 break;
             case 5:
                 break;
@@ -73,8 +73,6 @@ int main(){
         }
 
     }while(opcion == -1);
-
-    system("pause");
 
     return 0;
 }

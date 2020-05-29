@@ -1,22 +1,6 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-#include "list.h"
-#include "map.h"
 #include "functions.h"
 
-struct producto{
-
-    char * nombre;
-    char * marca;
-    char * tipo;
-    int stock;
-    int precio;
-
-};
-
-producto * crearProducto(char * nombre, char * marca, char * tipo, int stock, int precio){
+ producto * crearProducto(char * nombre, char * marca, char * tipo, int stock, int precio){
 
     producto * nuevo = (producto *) malloc (sizeof(producto));
     nuevo->nombre = nombre;
@@ -27,12 +11,6 @@ producto * crearProducto(char * nombre, char * marca, char * tipo, int stock, in
     return nuevo;
 
 }
-
-struct carrito{
-
-    List * productos;
-
-};
 
 char * _strdup (const char *s) {
     size_t len = strlen (s) + 1;
@@ -144,6 +122,7 @@ int exportarProductosCSV(HashTable * productos){
 
     printf("\n");
     printf("Los elementos han sido exportados de manera correcta, ");
+
     system("pause");
 
     return -1;
@@ -153,10 +132,10 @@ int agregarProducto(HashTable * productos){
 
     printf("Para agregar productos, se debe agregar la siguiente informacion, \n");
 
-    char nombre[100];
-    char marca[50];
-    char tipo[50];
-    int precio;
+    char * nombre = (char *) malloc (100 * sizeof(char));
+    char * marca = (char *) malloc (50 * sizeof(char));
+    char * tipo = (char *) malloc (50 * sizeof(char));
+    int * precio = (int *) malloc (sizeof(int));
 
     fflush(stdin);
 
@@ -165,9 +144,9 @@ int agregarProducto(HashTable * productos){
     fflush(stdin);
 
     producto * nuevoProducto; //se crea un puntero del producto que se agregará
+    producto * product = searchHashTable(productos, nombre);
 
-    producto * producto = searchHashTable(productos, nombre);
-    if(!producto){
+    if(!product){
 
         printf("Ingrese la marca del producto: ");
         scanf("%[^\n]s", marca);
@@ -178,7 +157,7 @@ int agregarProducto(HashTable * productos){
         printf("Ingrese su precio: ");
         scanf("%d", &precio);
 
-        int stock;
+        int * stock = (int *) malloc (sizeof(int));
         printf("El producto es nuevo, por favor ingrese el stock que desea agregar: ");
         do{
             scanf("%d", &stock);
@@ -214,20 +193,63 @@ int agregarProducto(HashTable * productos){
             int stock;
             do{
 
-                printf("\nPor favor ingrese el stock que desea agregar, el stock actual es: %d\n", producto->stock);
+                printf("\nPor favor ingrese el stock que desea agregar, el stock actual es: %d\n", product->stock);
                 printf("Stock a agregar: ");
                 scanf("%d", &stock);
 
                 if(stock <= 0) printf("\nel stock a agregar debe ser mayor a 0\n");
 
             }while(stock <= 0);
-            producto->stock = producto->stock + stock;
-            printf("\nEl nuevo stock del produto es: %d, ", producto->stock);
+            product->stock = product->stock + stock;
+            printf("\nEl nuevo stock del produto es: %d, ", product->stock);
             system("pause");
 
         }
 
     }
 
+    system("pause");
+
+    return -1;
+}
+
+int buscarPorTipo(HashTable * productos){
+
+    producto * product = firstHashTable(productos);
+    if(!product){
+
+        printf("No existe ningun producto almacenado aun, ");
+        system("pause");
+        return -1;
+
+    }
+
+    printf("Ingrese el tipo que desea buscar: ");
+    char tipo[50];
+    scanf("%s", tipo);
+    fflush(stdin);
+
+    int cont = 0;
+
+    while(product != NULL){
+
+        if(strcmp(product->tipo, tipo) == 0){
+
+            if(cont == 0) printf("\nEstos productos se han encontrado del tipo %s: \n\n", tipo);
+
+            printf("Nombre del producto: %s\n", product->nombre);
+            printf("Marca del producto: %s\n", product->marca);
+            printf("Stock del producto: %d\n", product->stock);
+            printf("Precio del producto: %d\n\n", product->precio);
+            cont++;
+        }
+        product = nextHashTable(productos);
+    }
+
+    if(cont == 0){
+        printf("\nNo se ha encontrado ningun producto de este tipo, ");
+    }
+
+    system("pause");
     return -1;
 }
