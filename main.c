@@ -49,9 +49,9 @@ int main(){
 
         switch(opcion){
 
-            case 1: if (importarProductosCSV(productos) == -1) opcion = -1;
+            case 1: opcion = importarProductosCSV(productos);
                 break;
-            case 2:
+            case 2: opcion = exportarProductosCSV(productos);
                 break;
             case 3:
                 break;

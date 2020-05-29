@@ -56,13 +56,26 @@ const char *get_csv_field (char * tmp, int i) {
     return NULL;
 }
 
+void anadirExtensionCSV(char * nombre){
+
+    size_t length = strlen(nombre);
+    nombre[length] = '.';
+    nombre[length + 1] = 'c';
+    nombre[length + 2] = 's';
+    nombre[length + 3] = 'v';
+    nombre[length + 4] = '\0';
+
+}
+
 int importarProductosCSV(HashTable * productos){
 
-    printf("Para importar productos, ingrese el nombre del archivo incluyendo su extension: ");
+    printf("Para importar productos, ingrese el nombre del archivo (sin incluir extension .csv): ");
 
     char nombreArchivo[50];
     scanf("%s", nombreArchivo);
     printf("\n");
+
+    anadirExtensionCSV(nombreArchivo);
 
     FILE * fp = fopen( nombreArchivo ,"r");
     if (!fp){
@@ -92,9 +105,46 @@ int importarProductosCSV(HashTable * productos){
 
     }
 
+    fclose(fp);
+
     printf("Los productos han sido exportados de manera exitosa, ");
     system("pause");
 
+
     return -1;
 
+}
+
+int exportarProductosCSV(HashTable * productos){
+
+    producto * producto = firstHashTable(productos);
+    if(producto == NULL){
+
+        printf("No existen elementos para exportar, por favor ingrese como minimo uno, ");
+        system("pause");
+        return -1;
+
+    }
+
+    char nombreArchivo[50];
+    printf("Por favor ingrese el nombre del archivo que desea ingresar los productos (sin extension .csv)\n");
+    printf("Si el archivo no existe sera creado: ");
+    scanf("%s", nombreArchivo);
+
+    anadirExtensionCSV(nombreArchivo);
+
+    FILE * fp = fopen(nombreArchivo, "w");
+
+    while(producto != NULL){
+
+        fprintf(fp, "%s,%s,%s,%d,%d\n", producto->nombre, producto->marca, producto->tipo, producto->stock, producto->precio);
+        producto = nextHashTable(productos);
+
+    }
+
+    printf("\n");
+    printf("Los elementos han sido exportados de manera correcta, ");
+    system("pause");
+
+    return -1;
 }
