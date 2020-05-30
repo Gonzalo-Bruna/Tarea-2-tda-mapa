@@ -11,16 +11,16 @@
 //struct producto
 typedef struct producto{
 
-    char * nombre;
-    char * marca;
-    char * tipo;
+    const char * nombre;
+    const char * marca;
+    const char * tipo;
     int stock;
     int precio;
 
 } producto;
 
 //función creadora de producto
-producto * crearProducto(char *, char *, char *, int, int);
+producto * crearProducto(const char *, const char *,const char *, int, int);
 
 //struct carrito
 typedef struct carrito{
@@ -52,4 +52,7 @@ int buscarPorTipo(HashTable *);
 
 //busca todos los productos de la marca ingresada
 int buscarPorMarca(HashTable *);
+
+//busca el producto con el nombre respectivo y muestra su información
+int buscarPorNombre(HashTable *);
 #endif

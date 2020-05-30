@@ -1,6 +1,6 @@
 #include "functions.h"
 
- producto * crearProducto(char * nombre, char * marca, char * tipo, int stock, int precio){
+ producto * crearProducto(const char * nombre, const char * marca, const char * tipo, int stock, int precio){
 
     producto * nuevo = (producto *) malloc (sizeof(producto));
     nuevo->nombre = nombre;
@@ -51,6 +51,7 @@ int importarProductosCSV(HashTable * productos){
 
     char nombreArchivo[50];
     scanf("%s", nombreArchivo);
+    fflush(stdin);
     printf("\n");
 
     anadirExtensionCSV(nombreArchivo);
@@ -64,9 +65,9 @@ int importarProductosCSV(HashTable * productos){
 
     char linea[1024];
 
-    char * nombreProducto;
-    char * marcaProducto;
-    char * tipoProducto;
+    const char * nombreProducto;
+    const char * marcaProducto;
+    const char * tipoProducto;
     int stockProducto;
     int precioProducto;
 
@@ -135,7 +136,7 @@ int agregarProducto(HashTable * productos){
     char * nombre = (char *) malloc (100 * sizeof(char));
     char * marca = (char *) malloc (50 * sizeof(char));
     char * tipo = (char *) malloc (50 * sizeof(char));
-    int * precio = (int *) malloc (sizeof(int));
+    int precio;
 
     fflush(stdin);
 
@@ -157,7 +158,7 @@ int agregarProducto(HashTable * productos){
         printf("Ingrese su precio: ");
         scanf("%d", &precio);
 
-        int * stock = (int *) malloc (sizeof(int));
+        int stock;
         printf("El producto es nuevo, por favor ingrese el stock que desea agregar: ");
         do{
             scanf("%d", &stock);
@@ -168,7 +169,6 @@ int agregarProducto(HashTable * productos){
         insertHashTable(productos, nombre, nuevoProducto);
         printf("\n");
         printf("El producto ha sido agregado de manera exitosa, con stock %d, ", nuevoProducto->stock);
-        system("pause");
 
     }
     else{
@@ -218,7 +218,7 @@ int buscarPorTipo(HashTable * productos){
     producto * product = firstHashTable(productos);
     if(!product){
 
-        printf("No existe ningun producto almacenado aun, ");
+        printf("No existe ningun producto almacenado aun, primero ingrese uno. ");
         system("pause");
         return -1;
 
@@ -259,7 +259,7 @@ int buscarPorMarca(HashTable * productos){
     producto * product = firstHashTable(productos);
     if(!product){
 
-        printf("No existe ningun producto almacenado aun, ");
+        printf("No existe ningun producto almacenado aun, primero ingrese uno. ");
         system("pause");
         return -1;
 
@@ -295,4 +295,40 @@ int buscarPorMarca(HashTable * productos){
     return -1;
 }
 
+int buscarPorNombre(HashTable * productos){
 
+    producto * product = firstHashTable(productos);
+    if(!product){
+
+        printf("aun no existe ningun producto almacenado, primero ingrese uno. ");
+        system("pause");
+        return -1;
+
+    }
+
+    printf("Por favor, ingrese el nombre del producto que desea buscar: ");
+    fflush(stdin);
+    char nombre[100];
+    scanf("%[^\n]s", nombre);
+    fflush(stdin);
+
+    product = searchHashTable(productos, nombre);
+
+    if(!product){
+
+        printf("No existe ningun producto con este nombre, ");
+        system("pause");
+        return -1;
+
+    }
+
+    printf("\nAqui esta la informacion del producto buscado: \n\n");
+    printf("Nombre del producto: %s\n", product->nombre);
+    printf("Marca del producto: %s\n", product->marca);
+    printf("Tipo del producto: %s\n", product->tipo);
+    printf("Stock del producto: %d\n", product->stock);
+    printf("Precio del producto: %d\n\n", product->precio);
+
+    system("pause");
+    return -1;
+}
