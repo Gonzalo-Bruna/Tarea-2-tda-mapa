@@ -55,4 +55,8 @@ int buscarPorMarca(HashTable *);
 
 //busca el producto con el nombre respectivo y muestra su información
 int buscarPorNombre(HashTable *);
+
+//muestra todos los productos y su información por pantalla
+int mostrarProductos(HashTable *);
+
 #endif

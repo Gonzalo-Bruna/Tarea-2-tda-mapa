@@ -61,7 +61,7 @@ int main(){
                 break;
             case 6: opcion = buscarPorNombre(productos);
                 break;
-            case 7:
+            case 7: opcion = mostrarProductos(productos);
                 break;
             case 8:
                 break;

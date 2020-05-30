@@ -332,3 +332,33 @@ int buscarPorNombre(HashTable * productos){
     system("pause");
     return -1;
 }
+
+int mostrarProductos(HashTable * productos){
+
+    producto * product = firstHashTable(productos);
+    if(!product){
+
+        printf("No existe ningun producto almacenado aun, primero ingrese uno. ");
+        system("pause");
+        return -1;
+
+    }
+
+    printf("Aqui esta la informacion de todos los productos almacenados: \n\n");
+
+    while(product != NULL){
+
+        printf("Nombre del producto: %s\n", product->nombre);
+        printf("Marca del producto: %s\n", product->marca);
+        printf("Tipo del producto: %s\n", product->tipo);
+        printf("Stock del producto: %d\n", product->stock);
+        printf("Precio del producto: %d\n\n", product->precio);
+
+        product = nextHashTable(productos);
+    }
+
+
+    system("pause");
+    return -1;
+
+}
