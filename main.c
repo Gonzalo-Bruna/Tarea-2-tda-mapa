@@ -9,6 +9,7 @@ int main(){
 
     int opcion;
     HashTable * productos = createHashTable(100);
+    List * carritos = createList();
 
     do{
 
@@ -63,7 +64,7 @@ int main(){
                 break;
             case 7: opcion = mostrarProductos(productos);
                 break;
-            case 8:
+            case 8: opcion = agregarAlCarrito(productos, carritos);
                 break;
             case 9:
                 break;

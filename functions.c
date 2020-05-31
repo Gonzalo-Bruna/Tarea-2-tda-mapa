@@ -12,6 +12,14 @@
 
 }
 
+carrito * crearCarrito(char * nombre){
+
+    carrito * nuevo = (carrito *) malloc (sizeof(carrito));
+    nuevo->nombre = nombre;
+    nuevo->productos = createList();
+    return nuevo;
+}
+
 char * _strdup (const char *s) {
     size_t len = strlen (s) + 1;
     void *new = malloc (len);
@@ -357,6 +365,388 @@ int mostrarProductos(HashTable * productos){
         product = nextHashTable(productos);
     }
 
+
+    system("pause");
+    return -1;
+
+}
+
+int agregarAlCarrito(HashTable * productos, List * carritos){
+
+    carrito * primerCarrito = first(carritos);
+    if(!primerCarrito){ // si es que no existe ningun carrito se pregunta si se desea añadir uno
+
+        int opcion;
+
+        printf("Aun no hay carritos para utilizar, desea crear uno?\n\n");
+        do{
+
+            printf("opcion 1: Crear un carrito nuevo\n");
+            printf("opcion 2: volver al menu principal\n\n");
+            printf("Digite su opcion: ");
+            scanf("%d", &opcion);
+
+            if(opcion != 1 && opcion != 2){
+
+                printf("\nDebe ingresar una opcion correcta\n");
+
+            }
+
+            if(opcion == 2) return -1;
+
+        }while(opcion != 1 && opcion != 2);
+
+        char * nombreCarrito = (char *) malloc (50 * sizeof(char));
+        printf("Por favor ingrese el nombre del nuevo carrito: ");
+        fflush(stdin);
+        scanf("%[^\n]s", nombreCarrito);
+        fflush(stdin);
+
+        carrito * nuevo = crearCarrito(nombreCarrito);
+        pushBack(carritos, nuevo);
+        printf("\nEl carrito ha sido creado con exito, que producto desea agregar al carrito?\n");
+        char nombreProducto[100];
+
+        do{
+
+            printf("\nIngrese el nombre del producto que desea agregar: ");
+            fflush(stdin);
+            scanf("%[^\n]s", nombreProducto);
+            fflush(stdin);
+
+            producto * product = searchHashTable(productos, nombreProducto);
+
+            if(!product){
+
+                printf("no se ha encontrado ningun producto con este nombre\n\n");
+
+                do{
+
+                    printf("opcion 1: Intentar nuevamente\n");
+                    printf("opcion 2: volver al menu principal\n\n");
+                    printf("Digite su opcion: ");
+                    scanf("%d", &opcion);
+
+                    if(opcion != 1 && opcion != 2){
+
+                        printf("\nDebe ingresar una opcion correcta\n");
+
+                    }
+
+                    if(opcion == 2) return -1;
+                    else break;
+
+                }while(opcion != 1 && opcion != 2);
+
+            }
+            else{
+
+                if(product->stock > 0){
+
+                    int stock;
+
+                    do{
+
+                        printf("\nEl stock del producto es: %d, que cantidad desea agregar al carrito?\n", product->stock);
+
+                        printf("Digite su respuesta: ");
+
+                        scanf("%d", &stock);
+                        if( (product->stock - stock) < 0){
+
+                            printf("\nno puede agregar mas que el stock disponible, intentelo nuevamente\n");
+
+                        }
+
+                    }while( (product->stock - stock) < 0);
+
+                    product->stock = product->stock - stock;
+                    pushBack(nuevo->productos, product);
+                    printf("\nEl producto ha sido agregado de manera correcta, el nuevo stock es: %d, ", product->stock);
+                    break;
+
+                }
+                else{
+
+                    printf("\nEl producto que desea comprar no tiene stock disponible\n");
+                    return -1;
+
+                }
+
+            }
+
+        }while(1);
+
+    }
+    else{
+
+        printf("Estos son los carritos existentes hasta el momento: \n\n");
+        int cont = 1;
+
+        while(primerCarrito != NULL){
+
+            printf("carrito %d: %s\n", cont, primerCarrito->nombre);
+            cont++;
+            primerCarrito = next(carritos);
+
+        }
+
+        int opcion;
+
+        do{
+
+            printf("\nQue desea hacer?\n\n");
+            do{
+
+                printf("opcion 1: Utilizar un carrito existente\n");
+                printf("opcion 2: Crear un carrito nuevo\n");
+                printf("opcion 3: Volver al menu principal\n\n");
+                printf("Digite su opcion: ");
+                scanf("%d", &opcion);
+
+                if(opcion < 1 || opcion > 3){
+
+                    printf("\nDebe ingresar una opcion correcta\n");
+
+                }
+
+            }while(opcion < 1 || opcion > 3);
+
+
+            if(opcion == 3) return -1;
+
+            char nombreCarrito[50];
+
+            if(opcion == 1){
+
+                do{
+
+                    printf("Por favor ingrese el nombre del carrito que desea utilizar: ");
+                    fflush(stdin);
+                    scanf("%[^\n]s", nombreCarrito);
+                    fflush(stdin);
+
+                    carrito * carritoExistente = first(carritos);
+                    while(carritoExistente){
+
+                        if(strcmp(carritoExistente->nombre, nombreCarrito) == 0) break;
+
+                        carritoExistente = next(carritos);
+
+                    }
+
+                    if (!carritoExistente){
+
+                        printf("\nNo existe ningun carrito con este nombre\n\n");
+
+                        do{
+
+                            printf("opcion 1: Intentar nuevamente\n");
+                            printf("opcion 2: volver al menu anterior\n\n");
+                            printf("Digite su opcion: ");
+                            scanf("%d", &opcion);
+
+                            if(opcion != 1 && opcion != 2){
+
+                                printf("\nDebe ingresar una opcion correcta\n");
+
+                            }
+
+                            if(opcion == 2 || opcion == 1) break;
+
+
+                        }while(opcion != 1 && opcion != 2);
+
+                        if(opcion == 2) break;
+
+                    }
+                    else{
+
+                        do{
+
+                            char nombreProducto[100];
+                            printf("\nIngrese el nombre del producto que desea agregar: ");
+                            fflush(stdin);
+                            scanf("%[^\n]s", nombreProducto);
+                            fflush(stdin);
+
+                            producto * product = searchHashTable(productos, nombreProducto);
+
+                            if(!product){
+
+                                printf("no se ha encontrado ningun producto con este nombre\n\n");
+
+
+                                    printf("opcion 1: Intentar nuevamente\n");
+                                    printf("opcion 2: volver al menu anterior\n\n");
+                                    printf("Digite su opcion: ");
+                                    scanf("%d", &opcion);
+
+                                    if(opcion != 1 && opcion != 2){
+
+                                        printf("\nDebe ingresar una opcion correcta\n");
+
+                                    }
+
+                                    if(opcion == 2) break;
+
+                            }
+                            else{
+
+                                if(product->stock > 0){
+
+                                    int stock;
+
+                                    do{
+
+                                        printf("\nEl stock del producto es: %d, que cantidad desea agregar al carrito?\n", product->stock);
+
+                                        printf("Digite su respuesta: ");
+
+                                        scanf("%d", &stock);
+                                        if( (product->stock - stock) < 0){
+
+                                            printf("\nno puede agregar mas que el stock disponible, intentelo nuevamente\n");
+
+                                        }
+
+                                    }while( (product->stock - stock) < 0);
+
+                                    product->stock = product->stock - stock;
+                                    pushBack(carritoExistente->productos, product);
+                                    printf("\nEl producto ha sido agregado de manera correcta, el nuevo stock es: %d, ", product->stock);
+                                    break;
+
+                                }
+                                else{
+
+                                    printf("\nEl producto que desea agregar no tiene stock disponible\n");
+                                    return -1;
+
+                                }
+
+                            }
+
+                        }while(1);
+
+                        if(opcion == 2) break;
+
+                    }
+
+                }while(1);
+
+            }
+            else if(opcion == 2){
+
+                do{
+
+                    char * nombreCarrito = (char *) malloc (50 * sizeof(char));
+                    printf("Por favor ingrese el nombre del nuevo carrito: ");
+                    fflush(stdin);
+                    scanf("%[^\n]s", nombreCarrito);
+                    fflush(stdin);
+
+                    carrito * existente = first(carritos);
+                    while(existente != NULL){
+
+                        if(strcmp(existente->nombre, nombreCarrito) == 0){
+
+                            printf("\nEl carrito que intenta crear ya existe\n");
+                            break;
+
+                        }
+                        existente = next(carritos);
+
+                    }
+
+                    if(!existente) break;
+
+
+                }while(1);
+
+                carrito * nuevo = crearCarrito(nombreCarrito);
+                pushBack(carritos, nuevo);
+                printf("\nEl carrito ha sido creado con exito, que producto desea agregar al carrito?\n");
+                char nombreProducto[100];
+
+                do{
+
+                    printf("\nIngrese el nombre del producto que desea agregar: ");
+                    fflush(stdin);
+                    scanf("%[^\n]s", nombreProducto);
+                    fflush(stdin);
+
+                    producto * product = searchHashTable(productos, nombreProducto);
+
+                    if(!product){
+
+                        printf("no se ha encontrado ningun producto con este nombre\n\n");
+
+                        do{
+
+                            printf("opcion 1: Intentar nuevamente\n");
+                            printf("opcion 2: volver al menu principal\n\n");
+                            printf("Digite su opcion: ");
+                            scanf("%d", &opcion);
+
+                            if(opcion != 1 && opcion != 2){
+
+                                printf("\nDebe ingresar una opcion correcta\n");
+
+                            }
+
+                            if(opcion == 2) return -1;
+                            else break;
+
+                        }while(opcion != 1 && opcion != 2);
+
+                    }
+                    else{
+
+                        if(product->stock > 0){
+
+                            int stock;
+
+                            do{
+
+                                printf("\nEl stock del producto es: %d, que cantidad desea agregar al carrito?\n", product->stock);
+
+                                printf("Digite su respuesta: ");
+
+                                scanf("%d", &stock);
+                                if( (product->stock - stock) < 0){
+
+                                    printf("\nno puede agregar mas que el stock disponible, intentelo nuevamente\n");
+
+                                }
+
+                            }while( (product->stock - stock) < 0);
+
+                            product->stock = product->stock - stock;
+                            pushBack(nuevo->productos, product);
+                            printf("\mEl producto ha sido agregado de manera correcta, el nuevo stock es: %d, ", product->stock);
+                            break;
+
+                        }
+                        else{
+
+                            printf("\nEl producto que desea agregar no tiene stock disponible\n");
+                            return -1;
+
+                        }
+
+                    }
+
+                }while(1);
+
+
+                printf("\nEl producto ha sido agregado de manera correcta, ");
+
+            }
+
+        }while(1);
+
+    }
 
     system("pause");
     return -1;

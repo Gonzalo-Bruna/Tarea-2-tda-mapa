@@ -25,9 +25,13 @@ producto * crearProducto(const char *, const char *,const char *, int, int);
 //struct carrito
 typedef struct carrito{
 
+    char * nombre;
     List * productos;
 
 } carrito;
+
+//funcion creadora de carrito
+carrito * crearCarrito(char *);
 
 //funcion que duplica un string
 char * _strdup (const char *);
@@ -59,4 +63,5 @@ int buscarPorNombre(HashTable *);
 //muestra todos los productos y su información por pantalla
 int mostrarProductos(HashTable *);
 
+int agregarAlCarrito(HashTable *, List *);
 #endif
