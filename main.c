@@ -66,7 +66,7 @@ int main(){
                 break;
             case 8: opcion = agregarAlCarrito(productos, carritos);
                 break;
-            case 9:
+            case 9: opcion = concretarCompra(carritos);
                 break;
             default:
                 break;

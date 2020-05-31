@@ -515,9 +515,9 @@ int agregarAlCarrito(HashTable * productos, List * carritos){
 
             if(opcion == 3) return -1;
 
-            char nombreCarrito[50];
-
             if(opcion == 1){
+
+                char nombreCarrito[50];
 
                 do{
 
@@ -615,7 +615,8 @@ int agregarAlCarrito(HashTable * productos, List * carritos){
                                     product->stock = product->stock - stock;
                                     pushBack(carritoExistente->productos, product);
                                     printf("\nEl producto ha sido agregado de manera correcta, el nuevo stock es: %d, ", product->stock);
-                                    break;
+                                    system("pause");
+                                    return -1;
 
                                 }
                                 else{
@@ -638,9 +639,10 @@ int agregarAlCarrito(HashTable * productos, List * carritos){
             }
             else if(opcion == 2){
 
+                char * nombreCarrito = (char *) malloc (50 * sizeof(char));
+
                 do{
 
-                    char * nombreCarrito = (char *) malloc (50 * sizeof(char));
                     printf("Por favor ingrese el nombre del nuevo carrito: ");
                     fflush(stdin);
                     scanf("%[^\n]s", nombreCarrito);
@@ -724,8 +726,9 @@ int agregarAlCarrito(HashTable * productos, List * carritos){
 
                             product->stock = product->stock - stock;
                             pushBack(nuevo->productos, product);
-                            printf("\mEl producto ha sido agregado de manera correcta, el nuevo stock es: %d, ", product->stock);
-                            break;
+                            printf("\nEl producto ha sido agregado de manera correcta, el nuevo stock es: %d, ", product->stock);
+                            system("pause");
+                            return -1;
 
                         }
                         else{
@@ -749,6 +752,142 @@ int agregarAlCarrito(HashTable * productos, List * carritos){
     }
 
     system("pause");
+    return -1;
+
+}
+
+int concretarCompra(List * carritos){
+
+    carrito * primerCarrito = first(carritos);
+    if(!primerCarrito){
+
+        printf("Aun no existe ningun carrito para concretar la compra, ");
+        system("pause");
+        return -1;
+
+    }
+
+    printf("Esta es la lista de carritos disponibles: \n\n");
+    int cont = 1;
+    while(primerCarrito){
+        printf("carrito %d: %s\n", cont, primerCarrito->nombre);
+        primerCarrito = next(carritos);
+        cont++;
+    }
+
+    char nombreCarrito[100];
+    int opcion;
+
+    do{
+
+        printf("\nIngrese el nombre del carrito: ");
+        fflush(stdin);
+        scanf("%[^\n]s", nombreCarrito);
+        fflush(stdin);
+
+        primerCarrito = first(carritos); //volvemos a utilizar la variable para buscar el carrito indicado
+
+        while(primerCarrito){
+
+            if(strcmp(primerCarrito->nombre, nombreCarrito) == 0) break;
+            primerCarrito = next(carritos);
+        }
+
+        if(!primerCarrito){
+
+            printf("\nNo se ha encontrado el carrito buscado, que desea hacer?\n\n");
+
+            do{
+
+
+                printf("opcion 1: Intentar nuevamente\n");
+                printf("opcion 2: Volver al menu principal\n\n");
+                printf("Digite su opcion: ");
+                scanf("%d", &opcion);
+
+                if(opcion == 2) return -1;
+
+                if(opcion < 1 || opcion > 2){
+
+                    printf("\nPor favor ingrese una opcion correcta\n\n");
+
+                }
+
+            }while(opcion < 1 || opcion > 2);
+
+        }
+        else break;
+
+    }while(1);
+
+    producto * primerProducto = first(primerCarrito->productos);
+
+    if(!primerProducto){
+
+        printf("El carrito seleccionado no contiene ningun producto, primero debe añadir uno, ");
+        system("pause");
+
+    }
+    else{
+
+        int precioTotal = 0;
+
+        printf("Estos son los productos en el carrito seleccionado:\n\n");
+
+        while(primerProducto){
+
+            printf("%s\n", primerProducto->nombre);
+            precioTotal = precioTotal + primerProducto->precio;
+            primerProducto = next(primerCarrito->productos);
+
+        }
+
+        printf("\nDesea concretar la compra?\n\n");
+
+        do{
+
+            printf("opcion 1: Concretar la compra\n");
+            printf("opcion 2: Volver al menu principal\n\n");
+            printf("Digite su opcion: ");
+            scanf("%d", &opcion);
+
+            if(opcion == 2) return -1;
+
+            if(opcion < 1 || opcion > 2){
+
+                printf("\nPor favor ingrese una opcion correcta\n\n");
+
+            }
+
+        }while(opcion < 1 || opcion > 2);
+
+        //concretar compra
+        printf("\nEl precio a pagar por todos los productos del carrito es: %d\n\n", precioTotal);
+        printf("Con cuanto dinero desea pagar?\n");
+        int efectivo;
+
+        do{
+            printf("Digite su respuesta: ");
+            scanf("%d", &efectivo);
+
+            if(efectivo < precioTotal){
+
+                printf("\nEl monto debe ser igual o mayor del total a pagar\n\n");
+
+            }
+
+        }while(efectivo < precioTotal);
+
+        printf("\nLa compra se ha efectuado de manera correcta, ");
+
+        if(efectivo > precioTotal){
+
+            printf("su vuelto es: %d", precioTotal - efectivo);
+
+        }
+
+    }
+
     return -1;
 
 }

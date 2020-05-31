@@ -63,5 +63,10 @@ int buscarPorNombre(HashTable *);
 //muestra todos los productos y su información por pantalla
 int mostrarProductos(HashTable *);
 
+//agrega a un carrito un producto que desea añadir, si el carrito no existe se crea uno, si es que ya hay carritos, los muestra por pantalla
+//y pregunta si queire usar uno ya creado o crear uno nuevo
 int agregarAlCarrito(HashTable *, List *);
+
+//concreta la compra de un carrito y se libera su memoria
+int concretarCompra(List *);
 #endif
