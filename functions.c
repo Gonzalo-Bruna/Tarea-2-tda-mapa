@@ -832,12 +832,11 @@ int concretarCompra(List * carritos){
 
         int precioTotal = 0;
 
-        printf("Estos son los productos en el carrito seleccionado:\n\n");
+        printf("\nEstos son los productos en el carrito seleccionado:\n\n");
 
         while(primerProducto){
 
             printf("%s\n", primerProducto->nombre);
-            precioTotal = precioTotal + primerProducto->precio;
             primerProducto = next(primerCarrito->productos);
 
         }
@@ -882,9 +881,11 @@ int concretarCompra(List * carritos){
 
         if(efectivo > precioTotal){
 
-            printf("su vuelto es: %d", precioTotal - efectivo);
+            printf("su vuelto es: %d, ", precioTotal - efectivo);
 
         }
+
+        system("pause");
 
     }
 
