@@ -824,7 +824,7 @@ int concretarCompra(List * carritos){
 
     if(!primerProducto){
 
-        printf("El carrito seleccionado no contiene ningun producto, primero debe añadir uno, ");
+        printf("\nEl carrito seleccionado no contiene ningun producto, primero debe agregar uno, ");
         system("pause");
 
     }
@@ -837,6 +837,7 @@ int concretarCompra(List * carritos){
         while(primerProducto){
 
             printf("%s\n", primerProducto->nombre);
+            precioTotal = precioTotal + primerProducto->precio;
             primerProducto = next(primerCarrito->productos);
 
         }
@@ -881,7 +882,8 @@ int concretarCompra(List * carritos){
 
         if(efectivo > precioTotal){
 
-            printf("su vuelto es: %d, ", precioTotal - efectivo);
+            printf("su vuelto es: %d, ", efectivo - precioTotal);
+            popCurrent(carritos);
 
         }
 
